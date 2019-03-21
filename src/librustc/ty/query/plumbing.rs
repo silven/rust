@@ -1213,7 +1213,7 @@ pub fn force_from_dep_node<'tcx>(
         DepKind::Layout |
         DepKind::ConstEval |
         DepKind::ConstEvalRaw |
-        DepKind::InstanceSymbolName |
+        DepKind::SymbolName |
         DepKind::MirShim |
         DepKind::BorrowCheckKrate |
         DepKind::Specializes |
@@ -1310,7 +1310,6 @@ pub fn force_from_dep_node<'tcx>(
         DepKind::TypeckTables => { force!(typeck_tables_of, def_id!()); }
         DepKind::UsedTraitImports => { force!(used_trait_imports, def_id!()); }
         DepKind::HasTypeckTables => { force!(has_typeck_tables, def_id!()); }
-        DepKind::SymbolName => { force!(def_symbol_name, def_id!()); }
         DepKind::SpecializationGraph => { force!(specialization_graph_of, def_id!()); }
         DepKind::ObjectSafety => { force!(is_object_safe, def_id!()); }
         DepKind::TraitImpls => { force!(trait_impls_of, def_id!()); }
@@ -1496,7 +1495,6 @@ impl_load_from_cache!(
     BorrowCheck => borrowck,
     MirBorrowCheck => mir_borrowck,
     MirConstQualif => mir_const_qualif,
-    SymbolName => def_symbol_name,
     ConstIsRvaluePromotableToStatic => const_is_rvalue_promotable_to_static,
     CheckMatch => check_match,
     type_of => type_of,
