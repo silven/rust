@@ -57,6 +57,7 @@ pub enum OptLevel {
     Aggressive, // -O3
     Size,       // -Os
     SizeMin,    // -Oz
+    Debug,      // -Og
 }
 
 impl_stable_hash_via_hash!(OptLevel);
@@ -655,6 +656,7 @@ impl Options {
                     OptLevel::No   |
                     OptLevel::Less |
                     OptLevel::Size |
+                    OptLevel::Debug |
                     OptLevel::SizeMin => true,
                     OptLevel::Default    |
                     OptLevel::Aggressive => false,
@@ -2151,12 +2153,13 @@ pub fn build_session_options_and_crate_config(
                 Some("3") => OptLevel::Aggressive,
                 Some("s") => OptLevel::Size,
                 Some("z") => OptLevel::SizeMin,
+                Some("g") => OptLevel::Debug,
                 Some(arg) => {
                     early_error(
                         error_format,
                         &format!(
                             "optimization level needs to be \
-                             between 0-3, s or z (instead was `{}`)",
+                             between 0-3, s, z or g (instead was `{}`)",
                             arg
                         ),
                     );

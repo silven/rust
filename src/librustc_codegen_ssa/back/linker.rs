@@ -197,6 +197,7 @@ impl<'a> GccLinker<'a> {
             config::OptLevel::Aggressive => "O3",
             config::OptLevel::Size => "Os",
             config::OptLevel::SizeMin => "Oz",
+            config::OptLevel::Debug => "Og",
         };
 
         self.linker_arg(&format!("-plugin-opt={}", opt_level));
@@ -789,7 +790,9 @@ impl<'a> Linker for EmLinker<'a> {
             OptLevel::Default => "-O2",
             OptLevel::Aggressive => "-O3",
             OptLevel::Size => "-Os",
-            OptLevel::SizeMin => "-Oz"
+            OptLevel::SizeMin => "-Oz",
+            // Emscripten doesn't support `-Og`, so pass `-O1` instead
+            OptLevel::Debug => "-O1",
         });
         // Unusable until https://github.com/rust-lang/rust/issues/38454 is resolved
         self.cmd.args(&["--memory-init-file", "0"]);
@@ -1008,7 +1011,9 @@ impl<'a> Linker for WasmLd<'a> {
             // Currently LLD doesn't support `Os` and `Oz`, so pass through `O2`
             // instead.
             OptLevel::Size => "-O2",
-            OptLevel::SizeMin => "-O2"
+            OptLevel::SizeMin => "-O2",
+            // And it doesn't support `-Og` either, so pass `-O1` instead
+            OptLevel::Debug => "-Og",
         });
     }
 

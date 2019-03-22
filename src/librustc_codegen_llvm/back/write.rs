@@ -110,6 +110,9 @@ pub fn to_llvm_opt_settings(cfg: config::OptLevel) -> (llvm::CodeGenOptLevel, ll
         Aggressive => (llvm::CodeGenOptLevel::Aggressive, llvm::CodeGenOptSizeNone),
         Size => (llvm::CodeGenOptLevel::Default, llvm::CodeGenOptSizeDefault),
         SizeMin => (llvm::CodeGenOptLevel::Default, llvm::CodeGenOptSizeAggressive),
+        // LLVM does not have a variant for `-Og`, clang treats it as `-O1`
+        // See: https://github.com/llvm/llvm-project/commit/d340ccc88a25af80a78882fb4d71544ec1f002b4
+        Debug => (llvm::CodeGenOptLevel::Less, llvm::CodeGenOptSizeNone),
     }
 }
 

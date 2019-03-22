@@ -873,6 +873,7 @@ pub fn provide_both(providers: &mut Providers<'_>) {
             config::OptLevel::Less => return config::OptLevel::Less,
             config::OptLevel::Default => return config::OptLevel::Default,
             config::OptLevel::Aggressive => return config::OptLevel::Aggressive,
+            config::OptLevel::Debug => return config::OptLevel::Debug,
             // If globally optimize-for-size has been requested, use -O2 instead (if optimize(size)
             // are present).
             config::OptLevel::Size => config::OptLevel::Default,

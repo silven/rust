@@ -15,6 +15,8 @@ all:
 	$(call RUN,debug) good
 	$(RUSTC) debug.rs -C opt-level=z
 	$(call RUN,debug) good
+	$(RUSTC) debug.rs -C opt-level=g
+	$(call RUN,debug) good
 	$(RUSTC) debug.rs -O
 	$(call RUN,debug) good
 	$(RUSTC) debug.rs
